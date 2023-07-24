@@ -8,6 +8,10 @@ function Header() {
   const products = useSelector((state) => state.cart.cartItems)
   const navigate = useNavigate();
 
+  const handleLoginSignup = () => {
+    navigate('/login-signup')
+  }
+
   const handleCartClick = () => {
     navigate('/cart')
   };
@@ -22,7 +26,7 @@ function Header() {
                 </svg>
                 <span>{products.length}</span>
             </button>
-            <button className='header-cart-button-2'>Sign In/up</button>
+            <button className='header-cart-button-2' onClick={handleLoginSignup}>Sign In/up</button>
         </div>
     </div>
   )

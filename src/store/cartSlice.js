@@ -16,7 +16,7 @@ const cartSlice = createSlice({
             console.log(existingItem)
 
             if(existingItem){
-                console.log("haha")
+               
                 state.cartItems = state.cartItems.map((x) => {
                     if(x._id === product._id){
                         return {...x,quantity:x.quantity+quantityToAdd}
