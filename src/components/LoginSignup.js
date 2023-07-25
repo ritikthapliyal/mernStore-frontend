@@ -1,16 +1,43 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import Header from './Header'
 import { useLoginMutation } from '../store/apis/usersApi'
-import Loading from './Loading'
+import SmallLoading from './SmallLoading'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { setCredentials } from '../store/authSlice'
 
 function LoginSignup() {
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const {search} = useLocation()
+    const searchParams = new URLSearchParams(search)
+    const redirect = searchParams.get('redirect') || '/'
+
+    const [login,{ isLoading, error }] = useLoginMutation()
+ 
+    const {userInfo} = useSelector((state)=>state.auth)
 
     const [loginData,setLoginData] = useState({email:"",password:""})
     const [signupData,setSignupData] = useState({email:"",password:"",name:""})
 
-    const handleLogin = ()=>{
-        console.log(loginData)
+    const handleLogin = async()=>{
+        try{
+            const res = await login(loginData).unwrap()
+            dispatch(setCredentials({...res}))
+            navigate(redirect)
+        }
+        catch(err){
+
+        }
     }
+
+    useEffect(()=>{
+        if(userInfo){
+            navigate(redirect)
+        }
+    },[userInfo,redirect])
 
     return (
         <Fragment>
@@ -27,6 +54,9 @@ function LoginSignup() {
                         onChange={(e)=>{setLoginData({...loginData,password:e.target.value})}}
                         placeholder='Password'></input>
                     <button onClick={handleLogin}>Login</button>
+                    {
+                        isLoading && <SmallLoading/>
+                    }
                 </div>
                 <div className='signup-side'>
                     <h2>SignUp</h2>

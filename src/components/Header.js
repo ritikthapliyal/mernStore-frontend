@@ -1,16 +1,22 @@
 import React from 'react'
 import '../index.css'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
 
 function Header() {
 
+  const navigate = useNavigate()
   const products = useSelector((state) => state.cart.cartItems)
-  const navigate = useNavigate();
+  const {userInfo} = useSelector((state)=>state.auth)
 
   const handleLoginSignup = () => {
     navigate('/login-signup')
+  }
+
+  const handleProfileButton = () => {
+    navigate('/profile')
   }
 
   const handleCartClick = () => {
@@ -27,7 +33,12 @@ function Header() {
                 </svg>
                 <span>{products.length}</span>
             </button>
-            <button className='header-cart-button-2' onClick={handleLoginSignup}>Sign In/up</button>
+            {
+              userInfo && userInfo._id ? 
+              <button className="profile-button" onClick={handleProfileButton}>{userInfo.name}</button>
+              :
+              <button className='header-cart-button-2' onClick={handleLoginSignup}>Sign In/up</button>
+            }
         </div>
     </div>
   )
