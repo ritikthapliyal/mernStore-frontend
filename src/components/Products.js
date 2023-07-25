@@ -1,18 +1,18 @@
-import React, { Fragment } from 'react';
-import Product from './Product';
-import Header from './Header';
-import { useGetProductsQuery } from '../store/apis/productsApi';
-import Loading from './Loading';
+import React, { Fragment } from 'react'
+import Product from './Product'
+import Header from './Header'
+import { useGetProductsQuery } from '../store/apis/productsApi'
+import Loading from './Loading'
 
 function Products() {
-  const { data, isLoading, isError } = useGetProductsQuery();
+  const { data, isLoading, isError } = useGetProductsQuery()
   
   if (isLoading) {
     return <Loading/>
   }
 
   if (isError) {
-    return <div>Error occurred while fetching products</div>;
+    return <div>Error occurred while fetching products</div>
   }
 
   return (

@@ -1,5 +1,6 @@
 import React from 'react'
 import '../index.css'
+import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,7 +19,7 @@ function Header() {
 
   return (
     <div className='header-component'>
-        <h1>Logo</h1>
+        <Link to={`/`}>Logo</Link>
         <div>
             <button onClick={handleCartClick}  className='header-cart-button-1'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
